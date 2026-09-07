@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResearchHub — Find papers & similar researchers</title>
+  <meta name="description" content="Free research material discovery and similar researcher matching, powered by OpenAlex." />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#/" class="brand" aria-label="ResearchHub home">
+        <span class="brand-mark">🔬</span>
+        <span class="brand-name">ResearchHub</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#/" data-nav="search">Search</a>
+        <a href="https://openalex.org" target="_blank" rel="noopener">OpenAlex ↗</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="app">
+    <!-- Search view -->
+    <section id="view-search" class="view" aria-label="Search">
+      <div class="hero">
+        <h1>Find research material. <span class="accent">Fast.</span></h1>
+        <p class="hero-sub">
+          Search 250M+ scholarly works and 90M+ authors. Discover similar
+          researchers in one click. Free and open-source.
+        </p>
+
+        <form id="search-form" class="search-form" role="search">
+          <div class="search-row">
+            <select id="search-type" class="search-type" aria-label="Search type">
+              <option value="works">Papers</option>
+              <option value="authors">Researchers</option>
+            </select>
+            <input
+              id="search-query"
+              class="search-input"
+              type="search"
+              placeholder="Search papers by title, keyword, or author…"
+              autocomplete="off"
+              required
+            />
+            <button type="submit" class="btn btn-primary" id="search-btn">Search</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="layout">
+        <!-- Filters -->
+        <aside class="filters" id="filters-panel" aria-label="Filters">
+          <h2 class="filters-title">Filters</h2>
+
+          <div class="filter-group">
+            <label class="filter-label" for="filter-year-from">From year</label>
+            <input type="number" id="filter-year-from" class="filter-input" min="1900" max="2026" placeholder="1900" />
+          </div>
+
+          <div class="filter-group">
+            <label class="filter-label" for="filter-year-to">To year</label>
+            <input type="number" id="filter-year-to" class="filter-input" min="1900" max="2026" placeholder="2026" />
+          </div>
+
+          <div class="filter-group">
+            <label class="filter-label" for="filter-topic">Topic (e.g. Deep Learning)</label>
+            <input type="text" id="filter-topic" class="filter-input" placeholder="Add a research topic…" />
+            <p class="filter-hint" id="filter-topic-status"></p>
+          </div>
+
+          <div class="filter-group">
+            <label class="filter-check">
+              <input type="checkbox" id="filter-oa" />
+              Open access only
+            </label>
+          </div>
+
+          <div class="filter-group">
+            <label class="filter-label" for="filter-sort">Sort by</label>
+            <select id="filter-sort" class="filter-input">
+              <option value="relevance_score:desc">Relevance</option>
+              <option value="cited_by_count:desc">Most cited</option>
+              <option value="publication_date:desc">Newest</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn btn-outline btn-block" id="filter-clear">Clear filters</button>
+        </aside>
+
+        <!-- Results -->
+        <section class="results" aria-live="polite">
+          <div class="results-meta" id="results-meta"></div>
+          <div class="results-grid" id="results-grid">
+            <div class="empty-state">
+              <div class="empty-icon">📚</div>
+              <h3>Start exploring</h3>
+              <p>Search for a paper or researcher above. Try “graph neural networks” or “Geoffrey Hinton”.</p>
+            </div>
+          </div>
+          <div class="pagination" id="pagination"></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- Author view -->
+    <section id="view-author" class="view" hidden aria-label="Researcher profile">
+      <button class="btn btn-outline back-btn" id="author-back">← Back to search</button>
+      <div id="author-content"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>Data from <a href="https://openalex.org" target="_blank" rel="noopener">OpenAlex</a> (CC0). ResearchHub is MIT-licensed open source.</p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="js/openalex.js"></script>
+  <script src="js/similarity.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
